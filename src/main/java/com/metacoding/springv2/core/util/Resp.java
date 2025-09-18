@@ -1,9 +1,7 @@
 package com.metacoding.springv2.core.util;
 
-
 import lombok.Data;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 @Data
 public class Resp<T> {
