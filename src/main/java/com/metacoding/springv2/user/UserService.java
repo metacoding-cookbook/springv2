@@ -37,22 +37,22 @@ public class UserService {
         return JwtUtil.create(findUser);
     }
 
-    // public AuthResponse.DTO 회원조회(Integer userId, Integer sessionUserId) {
-    //     if (!userId.equals(sessionUserId))
-    //         throw new Exception403("조회 권한이 없습니다");
-    //     User findUser = userRepository.findById(sessionUserId)
-    //             .orElseThrow(() -> new Exception404("회원을 찾을 수 없습니다"));
-    //     return new AuthResponse.DTO(findUser);
-    // }
+    public AuthResponse.DTO 회원조회(Integer userId, Integer sessionUserId) {
+        if (!userId.equals(sessionUserId))
+            throw new Exception403("조회 권한이 없습니다");
+        User findUser = userRepository.findById(sessionUserId)
+                .orElseThrow(() -> new Exception404("회원을 찾을 수 없습니다"));
+        return new AuthResponse.DTO(findUser);
+    }
 
-    // @Transactional
-    // public AuthResponse.DTO 회원수정(UserRequest.UpdateDTO requestDTO, Integer sessionUserId) {
-    //     User findUser = userRepository.findById(sessionUserId)
-    //             .orElseThrow(() -> new Exception404("회원을 찾을 수 없습니다"));
-    //     String encPassword = bCryptPasswordEncoder.encode(requestDTO.password());
-    //     findUser.update(requestDTO.email(), encPassword);
-    //     return new AuthResponse.DTO(findUser);
-    // }
+    @Transactional
+    public AuthResponse.DTO 회원수정(UserRequest.UpdateDTO requestDTO, Integer sessionUserId) {
+        User findUser = userRepository.findById(sessionUserId)
+                .orElseThrow(() -> new Exception404("회원을 찾을 수 없습니다"));
+        String encPassword = bCryptPasswordEncoder.encode(requestDTO.password());
+        findUser.update(requestDTO.email(), encPassword);
+        return new AuthResponse.DTO(findUser);
+    }
 
     public Map<String, Object> 유저네임중복체크(String username) {
         Map<String, Object> mapDTO = new HashMap<>();
