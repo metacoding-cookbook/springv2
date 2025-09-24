@@ -1,7 +1,6 @@
 package com.metacoding.springv2.auth;
 
 import com.metacoding.springv2.user.User;
-
 import jakarta.validation.constraints.*;
 
 public class AuthRequest {

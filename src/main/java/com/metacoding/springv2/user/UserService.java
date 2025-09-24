@@ -64,15 +64,4 @@ public class UserService {
         }
         return mapDTO;
     }
-
-    // @Transactional
-    // public AuthResponse.DTO 관리자_역할수정(Integer userId,AuthRequest.RolesDTO requestDTO){
-    //     User findUser = userRepository.findById(userId)
-    //     .orElseThrow(() -> new Exception404("회원을 찾을 수 없습니다"));
-    //     if(findUser.getRoles().equals(requestDTO.roles())){
-    //         throw new Exception403("동일한 역할로 수정할 수 없습니다");
-    //     }
-    //    findUser.updateRoles(requestDTO.roles());
-    //    return new AuthResponse.DTO(findUser);
-    // }
 }

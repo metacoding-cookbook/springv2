@@ -3,7 +3,7 @@ package com.metacoding.springv2.auth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.servlet.http.HttpServletRequest;
 import com.metacoding.springv2.core.util.Resp;
 import com.metacoding.springv2.user.UserService;
 
@@ -15,6 +15,13 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final UserService userService;
+
+    @GetMapping("/")
+    public String healthCheck(HttpServletRequest request) {
+        System.out.println(request.getRemoteAddr());
+        System.out.println(request.getRemotePort());
+        return "ok";
+    }
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@Valid @RequestBody AuthRequest.JoinDTO requestDTO, Errors errors) {
