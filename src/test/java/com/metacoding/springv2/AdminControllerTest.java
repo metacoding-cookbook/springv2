@@ -8,38 +8,45 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.metacoding.springv2.auth.AuthRequest;
 import com.metacoding.springv2.core.util.JwtUtil;
 import com.metacoding.springv2.user.User;
+import org.springframework.http.MediaType;
 
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 class AdminControllerTest extends MyRestDoc {
 
-        private String userToken;
-        private String adminToken;
+    @Autowired
+    private ObjectMapper om;
 
-        @BeforeEach
-        void setUp() {
+
+    private String userToken;
+    private String adminToken;
+
+    @BeforeEach
+    void setUp() {
                 // 테스트용 사용자 생성 및 JWT 토큰 생성
-                User user = User.builder()
-                                .id(1)
-                                .username("ssar")
-                                .password("1234")
-                                .email("ssar@metacoding.com")
-                                .roles("USER")
-                                .build();
-                userToken = JwtUtil.create(user);
+            User user = User.builder()
+                            .id(1)
+                            .username("ssar")
+                            .password("1234")
+                            .email("ssar@metacoding.com")
+                            .roles("USER")
+                            .build();
+            userToken = JwtUtil.create(user);
 
-                User user2 = User.builder()
+            User user2 = User.builder()
                                 .id(2)
                                 .username("cos")
                                 .password("1234")
                                 .email("cos@metacoding.com")
                                 .roles("ADMIN")
                                 .build();
-                adminToken = JwtUtil.create(user2);
-        }
+            adminToken = JwtUtil.create(user2);
+    }
 
         // 관리자 게시글 삭제 성공
         @Test
@@ -82,10 +89,15 @@ class AdminControllerTest extends MyRestDoc {
         public void rolesUpdate_success_test() throws Exception {
                 // given
                 Integer userId = 1;
+
+                AuthRequest.RolesDTO rolesDTO = new AuthRequest.RolesDTO("ADMIN");
+                String requestBody = om.writeValueAsString(rolesDTO);
                 // when
                 ResultActions result = mvc.perform(
                         MockMvcRequestBuilders.put("/api/admin/users/" + userId)
-                                        .header("Authorization", adminToken));
+                                        .header("Authorization", adminToken)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(requestBody));
 
                 // then
                 result.andExpect(status().isOk())
