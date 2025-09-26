@@ -35,9 +35,11 @@ public class BoardService {
     }
 
     // 다른 API에서도 사용가능!! (수정정보라고 하면 재사용성 떨어짐)
-    public BoardResponse.DTO 게시글정보(Integer boardId) {
+    public BoardResponse.DTO 게시글정보(Integer boardId, Integer sessionUserId) {
         Board findBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new Exception404("게시글을 찾을 수 없습니다"));
+        if (!findBoard.getUser().getId().equals(sessionUserId))
+            throw new Exception403("게시글에 접근할 권한이 없습니다");
         return new BoardResponse.DTO(findBoard);
     }
 

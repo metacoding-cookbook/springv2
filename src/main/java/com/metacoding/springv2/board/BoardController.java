@@ -39,8 +39,9 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}/edit")
-    public ResponseEntity<?> updateInfo(@PathVariable("boardId") Integer boardId) {
-        var responseDTO = boardService.게시글정보(boardId);
+    public ResponseEntity<?> updateInfo(@AuthenticationPrincipal User sessionUser,
+            @PathVariable("boardId") Integer boardId) {
+        var responseDTO = boardService.게시글정보(boardId,sessionUser.getId());
         return Resp.ok(responseDTO);
     }
 
