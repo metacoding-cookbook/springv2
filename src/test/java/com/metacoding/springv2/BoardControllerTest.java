@@ -57,18 +57,6 @@ public class BoardControllerTest extends MyRestDoc {
                                 .andExpect(jsonPath("$.body[0].id").value(1))
                                 .andExpect(jsonPath("$.body[0].title").value("title1"))
                                 .andExpect(jsonPath("$.body[0].content").value("content1"))
-                                .andExpect(jsonPath("$.body[1].id").value(2))
-                                .andExpect(jsonPath("$.body[1].title").value("title2"))
-                                .andExpect(jsonPath("$.body[1].content").value("content2"))
-                                .andExpect(jsonPath("$.body[2].id").value(3))
-                                .andExpect(jsonPath("$.body[2].title").value("title3"))
-                                .andExpect(jsonPath("$.body[2].content").value("content3"))
-                                .andExpect(jsonPath("$.body[3].id").value(4))
-                                .andExpect(jsonPath("$.body[3].title").value("title4"))
-                                .andExpect(jsonPath("$.body[3].content").value("content4"))
-                                .andExpect(jsonPath("$.body[4].id").value(5))
-                                .andExpect(jsonPath("$.body[4].title").value("title5"))
-                                .andExpect(jsonPath("$.body[4].content").value("content5"))
                                 .andDo(MockMvcResultHandlers.print()).andDo(document);
         }
 

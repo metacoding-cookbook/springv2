@@ -20,6 +20,7 @@
 새로운 사용자를 등록합니다.
 
 include::{snippets}/{auth}/join_success_test/http-request.adoc[]
+
 include::{snippets}/{auth}/join_success_test/http-response.adoc[]
 
 ===== POST /join (실패)
