@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.Errors;
 import jakarta.validation.Valid;
 
-import com.metacoding.springv2.auth.*;
+import com.metacoding.springv2.user.*;
 
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class AdminController {
 
     @PutMapping("/users/{userId}")
     public ResponseEntity<?> rolesUpdate(@PathVariable("userId") Integer userId,
-            @Valid @RequestBody AuthRequest.RolesDTO requestDTO, Errors errors) {
+            @Valid @RequestBody UserRequest.RolesDTO requestDTO, Errors errors) {
         var responseDTO = adminService.관리자_역할수정(userId,requestDTO);
         return Resp.ok(responseDTO);
     }

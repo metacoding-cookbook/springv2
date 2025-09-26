@@ -24,7 +24,7 @@ public class AdminService {
     }
 
     @Transactional
-    public AuthResponse.DTO 관리자_역할수정(Integer userId,AuthRequest.RolesDTO requestDTO){
+    public AuthResponse.DTO 관리자_역할수정(Integer userId,UserRequest.RolesDTO requestDTO){
         User findUser = userRepository.findById(userId)
         .orElseThrow(() -> new Exception404("회원을 찾을 수 없습니다"));
         if(findUser.getRoles().equals(requestDTO.roles())){

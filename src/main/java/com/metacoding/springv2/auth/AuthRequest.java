@@ -21,10 +21,5 @@ public class AuthRequest {
     public record LoginDTO(
             @NotEmpty(message = "유저네임을 입력해주세요") String username,
             @NotBlank(message = "비밀번호를 입력해주세요") String password) {
-    }
-
-    public record RolesDTO(
-        @NotEmpty(message = "역할을 설정해주세요") String roles){
-    }
-    
+    }  
 }
