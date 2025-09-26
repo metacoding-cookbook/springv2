@@ -10,9 +10,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.metacoding.springv2.auth.AuthRequest;
+import com.metacoding.springv2.user.*;
 import com.metacoding.springv2.core.util.JwtUtil;
-import com.metacoding.springv2.user.User;
 import org.springframework.http.MediaType;
 
 @Transactional
@@ -90,7 +89,7 @@ class AdminControllerTest extends MyRestDoc {
                 // given
                 Integer userId = 1;
 
-                AuthRequest.RolesDTO rolesDTO = new AuthRequest.RolesDTO("ADMIN");
+                UserRequest.RolesDTO rolesDTO = new UserRequest.RolesDTO("ADMIN");
                 String requestBody = om.writeValueAsString(rolesDTO);
                 // when
                 ResultActions result = mvc.perform(

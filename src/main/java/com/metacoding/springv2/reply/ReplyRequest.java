@@ -6,7 +6,6 @@ import com.metacoding.springv2.user.User;
 import jakarta.validation.constraints.*;
 
 public class ReplyRequest {
-
     public record SaveDTO(
             @Size(min = 1, max = 100, message = "댓글은 1자 이상 100자 이하로 입력해주세요") String comment,
 
