@@ -31,7 +31,7 @@ public class Board {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Reply> replies = new ArrayList<>();
 
     public void update(String title, String content) {

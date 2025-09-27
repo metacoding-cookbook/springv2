@@ -9,6 +9,7 @@ import com.metacoding.springv2.user.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +28,14 @@ public class AdminService {
     public AuthResponse.DTO 관리자_역할수정(Integer userId,UserRequest.RolesDTO requestDTO){
         User findUser = userRepository.findById(userId)
         .orElseThrow(() -> new Exception404("회원을 찾을 수 없습니다"));
-        if(findUser.getRoles().equals(requestDTO.roles())){
+
+        Set<String> currentRoles = new HashSet<>(Arrays.asList(findUser.getRoles().split(",")));
+        Set<String> requestedRoles = new HashSet<>(Arrays.asList(requestDTO.roles().split(",")));
+        
+        if (currentRoles.equals(requestedRoles)) {
             throw new Exception403("동일한 역할로 수정할 수 없습니다");
         }
-       findUser.updateRoles(requestDTO.roles());
+               findUser.updateRoles(requestDTO.roles());
        return new AuthResponse.DTO(findUser);
     }
 }
