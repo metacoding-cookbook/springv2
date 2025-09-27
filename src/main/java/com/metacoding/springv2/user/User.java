@@ -51,7 +51,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-
+        // roles는 단일값 USER 혹은 복수값 USER,ADMIN 형태로 존재함
         String[] roleList = roles.split(",");
 
         for (String role : roleList) {

@@ -13,8 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.metacoding.springv2.core.util.JwtUtil;
-import com.metacoding.springv2.user.User;
-import com.metacoding.springv2.user.UserRequest;
+import com.metacoding.springv2.user.*;
 
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)

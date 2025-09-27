@@ -1,8 +1,7 @@
 package com.metacoding.springv2.board;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
