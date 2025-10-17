@@ -1,0 +1,75 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+}
+
+group = 'com.metacoding'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// 1. asciidoctor-restdocs를 위한 스니펫 디렉토리 경로를 정의합니다.
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+// 2. 'test' 태스크가 실행되면 테스트 결과를 기반으로 API 문서 스니펫 파일을 생성합니다.
+tasks.named('test') {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+// 3. 'asciidoctor' 태스크는 테스트에서 생성된 스니펫(.adoc) 파일을 입력으로 받아서 최종적인 HTML API 문서로 변환합니다.
+tasks.named('asciidoctor') {
+    inputs.dir snippetsDir
+	
+    dependsOn test
+}
+
+// 4. 변환된 API 문서를 Spring Boot 프로젝트의 정적 리소스 디렉토리로 복사하는 태스크
+tasks.register('copyRestDocs', Copy) {
+    dependsOn tasks.named('asciidoctor')
+    from "${asciidoctor.outputDir}"  // asciidoctor 결과 위치
+    into "src/main/resources/static/docs"
+}
+
+tasks.named('bootJar') {
+    dependsOn tasks.named('copyRestDocs')
+}
+
+// 5. 빌드시 plain jar 파일 생성하지 않기
+jar {
+    enabled = false
+}
